@@ -39,8 +39,8 @@ namespace TradesTracker
             _poolAddress = Address.ParseRaw(_options.PoolAddress);
 
             _buttons = new([
-                InlineKeyboardButton.WithUrl($"{Emojis.MoneyBag}Buy on Dedust", $"https://dedust.io/swap/TON/{_options.TokenAddress}"),
-                InlineKeyboardButton.WithUrl($"{Emojis.BarChart}Chart", $"https://geckoterminal.com/ton/pools/{_options.PoolAddress}")
+                InlineKeyboardButton.WithUrl($"{Emojis.MoneyBag}Buy on Dedust", $"https://dedust.io/swap/TON/{_tokenAddress}"),
+                InlineKeyboardButton.WithUrl($"{Emojis.BarChart}Chart", $"https://geckoterminal.com/ton/pools/{_poolAddress}")
             ]);
         }
 
