@@ -4,6 +4,7 @@
 ## Features
 * Show actual current price in pool after trades
 * Show price change between trades
+* Show daily, weekly and monthly price differences
 * Only [DeDust](https://dedust.io) pools supported
 * Only Direct swaps supported (do not show full routing but still show swap if this pool is involved in routing)
 
@@ -30,7 +31,7 @@ TONCENTER_TOKEN=
 ```
 3. Run application in Docker Container
 ```bash
-docker compose up -d
+docker compose -f docker-compose.yml up -d
 ```
 
 ## Buy me a coffee
