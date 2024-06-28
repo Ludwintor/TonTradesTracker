@@ -1,0 +1,10 @@
+services:
+  tracker:
+    container_name: tracker
+    image: tradestracker
+    build:
+      context: .
+      dockerfile: TradesTracker/Dockerfile
+    env_file: 
+     - path: .env
+       required: false
