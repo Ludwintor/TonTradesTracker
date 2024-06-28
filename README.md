@@ -9,8 +9,8 @@
 * Only Direct swaps supported (do not show full routing but still show swap if this pool is involved in routing)
 
 ## Quick Start
-1. Edit `Tracker` options in `TradesTracker/appsettings.json` for your token and pool.
-Example (only hexadecimal address form supported):
+1. Edit `Tracker` options in `TradesTracker/config.json` for your jetton and pool (only hexadecimal address form supported). Add secrets for telegram bot and toncenter api key (you can ignore toncenter api key because without it we have 1 RPS and it's enough if you doesn't run multiple trackers)
+Example (check FAQ below):
 ```json
 "Tracker": {
     "ChannelId": -1002070106680,
@@ -20,16 +20,10 @@ Example (only hexadecimal address form supported):
     "PassDelay": 10, // in seconds
     "ExplorerUrl": "https://tonviewer.com/"
 }
+"BOT_TOKEN": "",
+"TONCENTER_TOKEN": ""
 ```
-2. Copy `example.env` as `.env` and add your telegram bot token (toncenter token usually not necessary as anonymous plan allows 1 RPS and this is sufficient for us)
-```bash
-cp example.env .env
-```
-```txt
-BOT_TOKEN=
-TONCENTER_TOKEN=
-```
-3. Run application in Docker Container
+2. Run application in Docker Container
 ```bash
 docker compose -f docker-compose.yml up -d
 ```

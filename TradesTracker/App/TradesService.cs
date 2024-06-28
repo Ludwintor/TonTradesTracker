@@ -10,7 +10,7 @@ using TradesTracker.Dedust;
 using TradesTracker.Options;
 using TradesTracker.Tonapi;
 
-namespace TradesTracker
+namespace TradesTracker.App
 {
     public class TradesService : BackgroundService
     {
@@ -112,7 +112,7 @@ namespace TradesTracker
               .Append("24h ").Append(Utils.EscapeMarkdown(tokenRate.DailyDiff.Ton)).Append(" \\| ")
               .Append("7d ").Append(Utils.EscapeMarkdown(tokenRate.WeeklyDiff.Ton)).Append(" \\| ")
               .Append("30d ").Append(Utils.EscapeMarkdown(tokenRate.MonthlyDiff.Ton));
-            
+
             _lastPrice = tonPrice;
             _lastLt = trades[^1].Lt;
             return true;

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace TradesTracker
+namespace TradesTracker.App
 {
     public static class Emojis
     {

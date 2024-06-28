@@ -4,7 +4,7 @@ using TradesTracker.Options;
 using TradesTracker.Tonapi;
 using TradesTracker.Toncenter;
 
-namespace TradesTracker
+namespace TradesTracker.App
 {
     public class Program
     {
@@ -13,10 +13,14 @@ namespace TradesTracker
         private const string DEDUST_URL_KEY = "DedustUrl";
         private const string TONCENTER_URL_KEY = "ToncenterUrl";
         private const string TONAPI_URL_KEY = "TonapiUrl";
+        private const string CONFIG_FILE = "config.json";
 
         public static void Main(string[] args)
         {
             var b = Host.CreateApplicationBuilder(args);
+            if (!b.Environment.IsDevelopment())
+                b.Configuration.AddJsonFile(CONFIG_FILE);
+
             b.Services.AddHostedService<TradesService>();
             b.Services.Configure<TrackerOptions>(b.Configuration.GetSection(TrackerOptions.TRACKER));
 

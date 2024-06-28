@@ -5,6 +5,10 @@ services:
     build:
       context: .
       dockerfile: TradesTracker/Dockerfile
-    env_file: 
-     - path: .env
-       required: false
+    configs:
+     - source: app_config
+       target: app/config.json
+
+configs:
+  app_config:
+    file: TradesTracker/config.json
