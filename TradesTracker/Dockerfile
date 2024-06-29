@@ -14,11 +14,11 @@ COPY ["TradesTracker/TradesTracker.csproj", "TradesTracker/"]
 RUN dotnet restore "./TradesTracker/TradesTracker.csproj"
 COPY . .
 WORKDIR "/src/TradesTracker"
-RUN dotnet build "./TradesTracker.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./TradesTracker.csproj" -c $BUILD_CONFIGURATION --no-restore -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./TradesTracker.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./TradesTracker.csproj" -c $BUILD_CONFIGURATION --no-restore -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
