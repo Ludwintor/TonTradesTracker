@@ -8,7 +8,7 @@
 * Only [DeDust](https://dedust.io) pools supported
 * Only Direct swaps supported (do not show full routing but still show swap if this pool is involved in routing)
 
-## Quick Start
+## Quick Start (Docker)
 1. Edit `Tracker` options in `TradesTracker/config.json` for your jetton and pool (only hexadecimal address form supported). Add secrets for telegram bot and toncenter api key (you can ignore toncenter api key because without it we have 1 RPS and it's enough if you doesn't run multiple trackers)
 Example (check FAQ below):
 ```json
@@ -25,16 +25,51 @@ Example (check FAQ below):
 ```
 2. Run application in Docker Container
 ```bash
-docker compose -f docker-compose.yml up -d
+docker compose -f docker-compose.yml up -d --build
+```
+
+## Quick Start (Local)
+1. Install .NET SDK 8.0 or newer (if not installed)
+```bash
+dotnet --version
+```
+2. Build from source code
+```bash
+dotnet publish -c Release -o publish ./TradesTracker/TradesTracker.csproj
+```
+3. Go to `publish` directory and edit `config.json` as explained in step 1 of Docker start guide
+4. Run application executable
+   
+Linux:
+```bash
+./TradesTracker
+```
+Windows:
+```powershell
+.\TradesTracker.exe
 ```
 
 ## Buy me a coffee
 
 ### TON (Toncoin, USDT)
-`UQA705AUWErQe9Ur56CZz-v6N9J2uw298w-31ZCu475hT8U4`
+```
+UQA705AUWErQe9Ur56CZz-v6N9J2uw298w-31ZCu475hT8U4
+```
 
 ### TRC20 (TRX, USDT)
-`TEHvFyCMSQSGsKg1TVGCcCiDXr1DMs4MTe`
+```
+TEHvFyCMSQSGsKg1TVGCcCiDXr1DMs4MTe
+```
+
+### ETH
+```
+0x95Ba8e4FeC184Ef983a89B020E6399Fa01E53bA3
+```
+
+### BTC
+```
+bc1q9czr3qmypd6xvt7m5c8lnnfh4e5ra6ppkjp78s
+```
 
 ## FAQ
 
