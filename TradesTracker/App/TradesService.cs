@@ -82,15 +82,15 @@ namespace TradesTracker.App
 
         private async Task<bool> ProcessTracking(StringBuilder sb, DedustPool pool, DedustAsset tokenAsset)
         {
-            Task poolTask = _dedust.UpdatePoolAsync(pool);
             Trade[] trades = await _dedust.GetTradesAsync(pool.Address, _options.TradesPerPass, _lastLt);
             _logger.LogInformation("Pool TON/{Symbol} found {Count} new trades", tokenAsset.Symbol, trades.Length);
-            await poolTask;
             if (trades.Length == 0)
                 return false;
 
             sb.Clear();
+            Task poolTask = _dedust.UpdatePoolAsync(pool);
             TokenRates tonRate = await _tonapi.GetTonUsdRate();
+            await poolTask;
             WriteTrades(sb, pool, trades, tonRate);
 
             double tonPrice = pool.PricePerRight;
