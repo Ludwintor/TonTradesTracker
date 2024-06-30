@@ -5,7 +5,7 @@
 * Show actual current price in pool after trades
 * Show price change between trades
 * Show daily, weekly and monthly price differences
-* Only [DeDust](https://dedust.io) pools supported
+* Only [DeDust](https://dedust.io) pools with TON supported
 * Only Direct swaps supported (do not show full routing but still show swap if this pool is involved in routing)
 
 ## Quick Start (Docker)
@@ -15,7 +15,6 @@ Example (check FAQ below):
 "Tracker": {
     "ChannelId": -1002070106680,
     "TokenAddress": "0:b113a994b5024a16719f69139328eb759596c38a25f59028b146fecdc3621dfe",
-    "PoolAddress": "0:3e5ffca8ddfcf36c36c9ff46f31562aab51b9914845ad6c26cbde649d58a5588",
     "TradesPerPass": 10, // maximum trades per message
     "PassDelay": 10, // in seconds
     "ExplorerUrl": "https://tonviewer.com/"
@@ -75,9 +74,6 @@ bc1q9czr3qmypd6xvt7m5c8lnnfh4e5ra6ppkjp78s
 
 ### How to get channel id?
 Start bot [`@JsonDumpBot`](https://t.me/JsonDumpBot) and forward any message from target channel to this bot. Look for `forward_from_chat` property and find `id` in this object
-
-### How to get DeDust pool address?
-Open target pool at https://dedust.io/pools. Look at url again and copy address after `/pools/`
 
 ### How to convert address to hexadecimal form?
 https://ton.org/address

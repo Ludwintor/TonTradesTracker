@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
 using TonSharp.Core;
 
 namespace TradesTracker.Dedust

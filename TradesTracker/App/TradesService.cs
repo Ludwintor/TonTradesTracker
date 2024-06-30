@@ -20,8 +20,7 @@ namespace TradesTracker.App
         private readonly ITonapiClient _tonapi;
         private readonly TrackerOptions _options;
         private readonly Address _tokenAddress;
-        private readonly Address _poolAddress;
-        private InlineKeyboardMarkup _buttons;
+        private InlineKeyboardMarkup? _buttons;
 
         private UInt128 _lastLt;
         private double _lastPrice;
@@ -36,12 +35,6 @@ namespace TradesTracker.App
 
             _options = trackerOptions.Value;
             _tokenAddress = Address.ParseRaw(_options.TokenAddress);
-            _poolAddress = Address.ParseRaw(_options.PoolAddress);
-
-            _buttons = new([
-                InlineKeyboardButton.WithUrl($"{Emojis.MoneyBag}Buy on Dedust", $"https://dedust.io/swap/TON/{_tokenAddress}"),
-                InlineKeyboardButton.WithUrl($"{Emojis.BarChart}Chart", $"https://geckoterminal.com/ton/pools/{_poolAddress}")
-            ]);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -49,10 +42,18 @@ namespace TradesTracker.App
             _logger.LogInformation("Bot {Name} started with channel {Id}", (await _bot.GetMeAsync(stoppingToken)).Username, _options.ChannelId);
             StringBuilder sb = new();
             TimeSpan passDelay = TimeSpan.FromSeconds(_options.PassDelay);
+
+            Address poolAddress = await _dedust.GetTonPoolAddress(_tokenAddress);
+            _buttons = new([
+                InlineKeyboardButton.WithUrl($"{Emojis.MoneyBag}Buy on Dedust", $"https://dedust.io/swap/TON/{_tokenAddress}"),
+                InlineKeyboardButton.WithUrl($"{Emojis.BarChart}Chart", $"https://geckoterminal.com/ton/pools/{poolAddress}")
+            ]);
+            await Task.Delay(1000, stoppingToken); // wait one second to avoid hitting rate limit
+
             DedustAsset tokenAsset = await _dedust.GetAssetAsync(_tokenAddress);
             _logger.LogInformation("Token metadata inited. Symbol: {Symbol} | Decimals: {Decimals}", tokenAsset.Symbol, tokenAsset.Decimals);
-            DedustPool pool = new(_poolAddress, DedustAsset.Ton, tokenAsset);
-            _lastLt = (await _dedust.GetTradesAsync(_poolAddress, 1)).First().Lt;
+            DedustPool pool = new(poolAddress, DedustAsset.Ton, tokenAsset);
+            _lastLt = (await _dedust.GetTradesAsync(poolAddress, 1)).First().Lt;
             await _dedust.UpdatePoolAsync(pool);
             _lastPrice = pool.PricePerRight;
             _logger.LogInformation("Pool TON/{Symbol} found: {Address} Price: {Price:0.000000} TON", tokenAsset.Symbol, pool.Address, _lastPrice);

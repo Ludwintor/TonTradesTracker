@@ -2,7 +2,6 @@
   "Tracker": {
     "ChannelId": 0,
     "TokenAddress": "",
-    "PoolAddress": "",
     "TradesPerPass": 10,
     "PassDelay": 10,
     "ExplorerUrl": "https://tonviewer.com/"

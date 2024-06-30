@@ -8,8 +8,6 @@
 
         public required string TokenAddress { get; init; }
 
-        public required string PoolAddress { get; init; }
-
         public required int TradesPerPass { get; init; }
 
         public required int PassDelay { get; init; }
