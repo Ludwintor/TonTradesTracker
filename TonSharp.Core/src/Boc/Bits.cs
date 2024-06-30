@@ -83,7 +83,7 @@ namespace TonSharp.Core
 
         public string ToBase64String()
         {
-            return Convert.ToBase64String(_buffer).ToLower();
+            return Convert.ToBase64String(_buffer);
         }
 
         public override string ToString()
