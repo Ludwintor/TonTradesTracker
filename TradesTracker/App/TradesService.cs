@@ -73,7 +73,7 @@ namespace TradesTracker.App
                             LinkPreviewOptions = new() { IsDisabled = true }
                         }, stoppingToken);
                 }
-                catch (HttpRequestException ex)
+                catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
                 {
                     _logger.LogError(ex, "Tracking failed with error: {Message}", ex.Message);
                 }
