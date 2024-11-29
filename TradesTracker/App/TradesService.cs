@@ -14,6 +14,8 @@ namespace TradesTracker.App
 {
     public class TradesService : BackgroundService
     {
+        private const string REF_ADDRESS = "UQA705AUWErQe9Ur56CZz-v6N9J2uw298w-31ZCu475hT8U4";
+
         private readonly ILogger<TradesService> _logger;
         private readonly ITelegramBotClient _bot;
         private readonly IDedustClient _dedust;
@@ -39,15 +41,16 @@ namespace TradesTracker.App
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("Bot {Name} started with channel {Id}", (await _bot.GetMeAsync(stoppingToken)).Username, _options.ChannelId);
+            _logger.LogInformation("Bot {Name} started with channel {Id}", (await _bot.GetMe(stoppingToken)).Username, _options.ChannelId);
             StringBuilder sb = new();
             TimeSpan passDelay = TimeSpan.FromSeconds(_options.PassDelay);
 
             Address poolAddress = await _dedust.GetTonPoolAddress(_tokenAddress);
-            _buttons = new([
-                InlineKeyboardButton.WithUrl($"{Emojis.MoneyBag}Buy on Dedust", $"https://dedust.io/swap/TON/{_tokenAddress}"),
+            _buttons = new(
+                InlineKeyboardButton.WithUrl($"{Emojis.MoneyBag}Buy on coffee.swap", 
+                    $"https://swap.coffee/dex?ft=TON&st={_tokenAddress}&referral=user_{REF_ADDRESS}"),
                 InlineKeyboardButton.WithUrl($"{Emojis.BarChart}Chart", $"https://geckoterminal.com/ton/pools/{poolAddress}")
-            ]);
+            );
             await Task.Delay(1000, stoppingToken); // wait one second to avoid hitting rate limit
 
             DedustAsset tokenAsset = await _dedust.GetAssetAsync(_tokenAddress);
@@ -64,7 +67,7 @@ namespace TradesTracker.App
                 try
                 {
                     if (await ProcessTracking(sb, pool, tokenAsset))
-                        await _bot.MakeRequestAsync(new SendMessageRequest
+                        await _bot.SendRequest(new SendMessageRequest
                         {
                             ChatId = _options.ChannelId,
                             Text = sb.ToString(),

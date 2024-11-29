@@ -1,6 +1,6 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 
@@ -9,7 +9,6 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["TonSharp.Core/src/TonSharp.Core.csproj", "TonSharp.Core/src/"]
 RUN dotnet restore "./TonSharp.Core/src/TonSharp.Core.csproj"
-COPY ["TradesTracker/nuget.config", "TradesTracker/"]
 COPY ["TradesTracker/TradesTracker.csproj", "TradesTracker/"]
 RUN dotnet restore "./TradesTracker/TradesTracker.csproj"
 COPY . .
